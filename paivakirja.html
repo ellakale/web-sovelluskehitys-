@@ -45,51 +45,33 @@
       <div>Hei Käyttäjä:&nbsp;<span class="username">NIMI TÄHÄN</span></div>
     </nav>
 
-    <div id="taustakuva"></div>
-
-    <!---------------->
-    <!-- Main area with infotext and menus -->
-
     <main>
-      <section class="info-area" id="info">
-        <div id="info-text">
-          Miten
-          <span class="main_cl">HyteGym</span>
-          auttaa sinua hyvinvointisi seuraamisessa
-        </div>
-      </section>
+      <h2>Tänne päiväkirjahaut</h2>
+      <button class="get_entries">Hae päiväkirjamerkinnät</button>
 
-      <section class="about-us" id="contact">
-        <img
-          src="/images/sykevalivaihtelu.png"
-          alt="Sykevälivaihtelu"
-          class="fl card-inside"
-        />
-        <h3 class="secon_cl mb-10">YHTEYSTIEDOT</h3>
-        <h2 class="black_cl bolder mb-10">Tämä on meidän tarinamme</h2>
-        <p>
-          Olemme joukko nuoria yrittäjiä, jotka uskovat HRV tiedon ja
-          treeniohjelman voimaan hyvinvoinnin seurannassa.
-        </p>
-        <p>
-          Sykevälivaihtelua tai HRV:tä käytetään fysiologisiin mittauksiin kuten
-          VO2-maksimaalinen hapenottokyky, SV-stressitesti, Suoritustaso,
-          Anaerobinen kynnys ja Harjoituksen tehokkuus. Yhdistämällä HRV
-          seurannan henkilökohtaiseen treeniohjelmaasi, voit saavuttaa nopeasti,
-          tehokkaasti sekä ennenkaikkea turvallisesti uusia tasoja kuntosi
-          kehityksessä.
-        </p>
-        <p>
-          Ohjelmamme tukee kehitystäsi eri treeniohjelmien muodossa, tarjoaa
-          päiväkirjan hvyinvointisi seurantaan sekä HRV tietojesi analysointiin.
-          Voit saada kauttamme myös yhteyden terveydenhuollon ammattilaisiin,
-          sekä personal trainer palveluihin.
-        </p>
+      <!-- Flexbox pohja johon kortit luodaan -->
+      <section class="diary-card-area">
+        <div class="card">
+          <h2>Otsikko</h2>
+          <p>Teksti</p>
+        </div>
+        <div class="card">
+          <h2>Otsikko</h2>
+          <p>Teksti</p>
+        </div>
+        <div class="card">
+          <h2>Otsikko</h2>
+          <p>Teksti</p>
+        </div>
+        <div class="card">
+          <h2>Otsikko</h2>
+          <p>Teksti</p>
+        </div>
       </section>
     </main>
     <footer>
       <p>Copyright, Meitsi</p>
     </footer>
   </body>
-  <script type="module" src="/src/js/main.js"></script>
+  <script type="module" src="/src/js/diary.js"></script>
 </html>
