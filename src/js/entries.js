@@ -2,6 +2,16 @@ import { fetchData } from './fetch.js';
 
 const diaryContainer = document.querySelector('.diary-card-area');
 
+// Dialog
+/////////////////////////////
+
+const dialog = document.querySelector('.diary_dialog');
+const closeButton = document.querySelector('.diary_dialog button');
+// "Close" button closes the dialog
+closeButton.addEventListener('click', () => {
+  dialog.close();
+});
+
 const getEntries = async (event) => {
   const url = 'http://localhost:3000/api/entries';
   let headers = {};
@@ -50,7 +60,20 @@ const getEntries = async (event) => {
       <p><strong>Notes:</strong> ${entry.notes}</p>
     `;
 
+    // Tähän tehdään dialogin avaus
+    const openCard = document.createElement('button');
+    openCard.classList.add('dialogButton');
+    openCard.textContent = 'Avaa Dialogissa';
+
+    // lisätään nappulalle kuuntelija
+    openCard.addEventListener('click', () => {
+      dialog.showModal();
+      dialog.querySelector('.diary_id').innerHTML =
+        `<div>ID: <span>${entry.entry_id}</span></div>`;
+    });
+
     card.appendChild(cardDiary);
+    card.appendChild(openCard);
     diaryContainer.appendChild(card);
   });
 };

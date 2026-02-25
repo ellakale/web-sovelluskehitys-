@@ -178,6 +178,12 @@ nav ul li a:hover {
 }
 
 /*********************/
+/* Dialog */
+dialog {
+  margin: auto;
+}
+
+/*********************/
 /* BMI osion tyylittely */
 
 .card {
