@@ -16,6 +16,9 @@ body {
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   font-size: 1em;
+  background: linear-gradient(to bottom, #f7fbfa, #eef6f4);
+  color: #25323a;
+  line-height: 1.6;
 }
 
 nav,
@@ -29,23 +32,29 @@ main {
 /* utility & main classes */
 
 .black_cl {
-  color: rgba(24, 31, 37, 1);
+  color: #25323a;
 }
+
 .bolder {
   font-weight: bolder;
 }
+
 .light_font {
-  color: rgb(202, 202, 202);
+  color: #6f7d85;
 }
+
 .main_cl {
-  color: rgb(86, 210, 216);
+  color: #2f9e8f;
 }
+
 .fl {
   float: left;
 }
+
 .mb-10 {
   margin-bottom: 10px;
 }
+
 .fd-col {
   flex-direction: column;
 }
@@ -54,19 +63,20 @@ main {
 /* Navigaatio alueen tyylittely */
 
 nav {
-  background-color: white;
+  background: linear-gradient(90deg, #1f3a44, #2f5d62);
   color: #fff;
-  padding: 0.5rem 4rem;
-  font-weight: 100;
-  font-size: 1.2em;
-  background-color: rgb(30, 39, 46);
-  box-shadow: 0 8px 16px -6px black;
-  height: 100px;
-  /* lisäys */
+  padding: 0.8rem 4rem;
+  font-weight: 400;
+  font-size: 1.05em;
+  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.35);
+  min-height: 90px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
 }
+
 nav ul {
   list-style-type: none;
 }
@@ -75,51 +85,50 @@ a {
   text-decoration: none;
 }
 
-/* Logon erityis liukuväri */
+/* Logon erityisliukuväri */
 
 nav ul li:first-child a {
-  /* Fallback: Set a background color. */
-  background-color: rgb(65 77 159);
-
-  /* Create the gradient. */
-  /* background-image: linear-gradient(45deg, #f3ec78, #af4261);*/
-  background-image: linear-gradient(45deg, rgb(86, 210, 216), rgb(65 77 159));
-
-  /* Set the background size and repeat properties. */
+  background-color: #7ad7c8;
+  background-image: linear-gradient(45deg, #8ce3d6, #d8fff8);
   background-size: 100%;
   background-repeat: repeat;
-
-  /* Use the text as a mask for the background. */
-  /* This will show the gradient as a text color rather than element bg. */
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
-  font-size: larger;
-  font-family: 'Roboto Slab', serif;
-  font-weight: 900;
+  font-size: 1.4rem;
+  font-family: 'Lato', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.5px;
   margin-right: 40px;
 }
 
 nav ul a {
-  color: rgb(197, 197, 197);
-  padding: 0.6rem;
-  margin: 0 0.25em;
-  font-size: smaller;
-  transition: color 0.5s;
+  color: #d7e4e6;
+  padding: 0.6rem 0.8rem;
+  margin: 0 0.2em;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
 }
 
 nav ul li {
   float: left;
 }
+
 nav ul li a:hover {
-  color: rgb(206, 255, 149);
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
 }
 
 .selected {
-  border-bottom: 1px solid var(rgb(86, 210, 216));
-  color: var(rgb(86, 210, 216));
+  border-bottom: 2px solid #8ce3d6;
+  color: #ffffff;
 }
 
 /*********************/
@@ -127,16 +136,19 @@ nav ul li a:hover {
 
 #taustakuva {
   max-width: 1200px;
-  margin: auto;
+  margin: 18px auto 0 auto;
   width: 100%;
-  height: 300px;
-  background-color: aliceblue;
-  background-image: url(/images/kukka.jpeg);
+  height: 320px;
+  background-color: #dcefee;
+  background-image: url(/images/meditation.webp);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px;
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  box-shadow: 0 18px 35px -18px rgba(26, 61, 67, 0.4);
 }
 
 /*********************/
@@ -144,12 +156,15 @@ nav ul li a:hover {
 
 .info-area {
   margin-top: 50px;
+  padding: 0 20px;
 }
 
 #info-text {
   text-align: center;
-  /* This way the text wont wrap */
-  font-size: 1.5em;
+  font-size: 1.45em;
+  color: #2f4a52;
+  max-width: 760px;
+  margin: auto;
 }
 
 /*********************/
@@ -157,67 +172,110 @@ nav ul li a:hover {
 
 .about-us {
   min-height: 400px;
-  background-color: #f0f0f0;
+  background-color: #edf5f3;
   background-image: url('../images/pexels-lukas-crop.jpg');
   background-position: right;
   background-size: cover;
   padding: 80px;
   padding-right: 30%;
-  color: black;
+  color: #1f2d33;
   position: relative;
   margin-top: 50px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 18px 35px -18px rgba(0, 0, 0, 0.22);
 }
+
+.about-us::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 252, 251, 0.72);
+}
+
+.about-us > * {
+  position: relative;
+  z-index: 1;
+}
+
 .about-us p {
   margin-bottom: 15px;
 }
+
 .card-inside {
   margin-right: 50px;
   margin-bottom: 30px;
   max-width: 330px;
-  border-radius: 20px;
+  border-radius: 22px;
+  background-color: rgba(255, 255, 255, 0.88);
+  padding: 20px;
+  box-shadow: 0 10px 24px -16px rgba(0, 0, 0, 0.3);
 }
 
 /*********************/
 /* Dialog */
+
 dialog {
   margin: auto;
+  border: none;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.35);
 }
 
 /*********************/
 /* BMI osion tyylittely */
 
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 500px;
+  background-color: #ffffff;
+  box-shadow: 0 16px 34px -20px rgba(32, 59, 63, 0.45);
+  border-radius: 24px;
+  max-width: 520px;
   margin: 50px auto;
-  padding: 30px;
+  padding: 32px;
+  border: 1px solid #e0ece8;
 }
 
 .card > h2 {
   margin-top: 15px;
+  color: #21414a;
 }
 
 .card p {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
+
 .description {
-  color: grey;
-  font-size: 18px;
+  color: #66757d;
+  font-size: 17px;
 }
 
 label {
   display: block;
+  margin-top: 10px;
+  color: #35515a;
+  font-weight: 600;
 }
 
 input[type='text'] {
   width: 50%;
-  padding: 12px 20px;
+  padding: 12px 16px;
   margin: 8px 0;
   display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid #c8d8d4;
+  border-radius: 12px;
   box-sizing: border-box;
+  background-color: #f9fcfb;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+input[type='text']:focus {
+  outline: none;
+  border-color: #54b8a9;
+  box-shadow: 0 0 0 3px rgba(84, 184, 169, 0.18);
 }
 
 .btn {
@@ -226,18 +284,29 @@ input[type='text'] {
   border: none;
   outline: 0;
   display: inline-block;
-  padding: 8px;
+  padding: 12px 16px;
   color: white;
-  background-color: rgb(30, 39, 46);
+  background: linear-gradient(90deg, #2f9e8f, #3bb8a5);
   text-align: center;
   cursor: pointer;
   width: 100%;
   font-size: 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .btn:hover,
 a:hover {
-  opacity: 0.7;
+  opacity: 0.95;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 22px -14px rgba(47, 158, 143, 0.65);
 }
 
 tbody {
@@ -245,18 +314,20 @@ tbody {
 }
 
 td {
-  border: 1px solid #ddd;
-  padding: 5px;
+  border: 1px solid #d8e2df;
+  padding: 8px;
 }
 
 .lowBmi {
-  background-color: rgb(71, 178, 210);
+  background-color: #9fd7ef;
 }
+
 .normalBmi {
-  background-color: rgb(112, 223, 112);
+  background-color: #b8ebbf;
 }
+
 .highBmi {
-  background-color: rgb(244, 148, 30);
+  background-color: #ffd199;
 }
 
 /*********************/
@@ -265,12 +336,13 @@ td {
 footer {
   width: 100%;
   text-align: center;
-  padding-top: 40px;
-  background-color: rgb(117, 11, 44);
-  filter: brightness(40%);
+  padding-top: 36px;
+  background: linear-gradient(90deg, #264653, #1f3a44);
   height: 100px;
   margin-top: 50px;
   color: #fefefe;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
 }
 
 /* Breakpointit tänne */
