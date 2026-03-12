@@ -4,8 +4,10 @@ import {
   addEntry,
   listAllEntriesByUserId,
   removeEntryById,
+  updateEntryById,
 } from '../models/entry-model.js';
 
+// Palauttaa vain kirjautuneen käyttäjän omat päiväkirjamerkinnät
 const getEntries = async (req, res) => {
   // haetaan kaikkien käyttäjien merkinnät
   //const result = await listAllEntries();
@@ -28,35 +30,62 @@ const getEntryById = async (req, res) => {
   }
 };
 
-const postEntry = async (req, res) => {
-  const {entry_date, mood, weight, sleep_hours, notes} = req.body;
-  // user property (& id) is added to req by authentication middleware
+const postEntry = async (req, res, next) => {
   const user_id = req.user.user_id;
-  if (entry_date && (weight || mood || sleep_hours || notes) && user_id) {
-    const result = await addEntry({user_id, ...req.body});
-    if (result.entry_id) {
-      res.status(201);
-      res.json({message: 'New entry added.', ...result});
-    } else {
-      res.status(500);
-      res.json(result);
+
+  try {
+    const result = await addEntry({ user_id, ...req.body });
+
+    if (result.error) {
+      const error = new Error(result.error);
+      error.statusCode = 500;
+      return next(error);
     }
-  } else {
-    res.sendStatus(400);
+
+    res.status(201).json({
+      message: 'Uusi hyvinvointimerkintä tallennettu.',
+      ...result,
+    });
+  } catch (error) {
+    error.statusCode = 500;
+    next(error);
   }
 };
 
-const putEntry = (req, res) => {
-  // placeholder for future implementation
-  res.sendStatus(200);
+const putEntry = async (req, res, next) => {
+  const user_id = req.user.user_id;
+  const entry_id = req.params.id;
+
+  try {
+    const result = await updateEntryById(entry_id, user_id, req.body);
+
+    if (result.error) {
+      const error = new Error(result.error);
+      error.statusCode = 500;
+      return next(error);
+    }
+
+    if (result > 0) {
+      return res.json({ message: 'Merkintä päivitetty onnistuneesti.' });
+    }
+
+    const error = new Error(
+      'Merkintää ei löytynyt tai sinulla ei ole oikeutta muokata sitä.'
+    );
+    error.statusCode = 404;
+    return next(error);
+  } catch (error) {
+    error.statusCode = 500;
+    next(error);
+  }
 };
 
 const deleteEntry = async (req, res) => {
   const affectedRows = await removeEntryById(req.params.id, req.user.user_id);
   if (affectedRows > 0) {
-    res.json({message: 'entry deleted'});
+    res.json({message: 'Merkintä poistettu onnistuneesti.'});
   } else {
-    res.status(404).json({message: 'entry not found'});
+    res.status(404).json({message: 'Merkintää ei löytynyt.'});
   }
 };
 

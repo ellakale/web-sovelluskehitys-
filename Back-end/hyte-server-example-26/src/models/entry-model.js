@@ -11,7 +11,7 @@ const listAllEntries = async () => {
     return {error: e.message};
   }
 };
-
+//Palauttaa vain ne päiväkirjamerkinnät, jotka kuuluvat kirjautuneelle käyttäjälle
 const listAllEntriesByUserId = async (id) => {
   try {
     const sql = 'SELECT * FROM DiaryEntries WHERE user_id = ?';
@@ -54,6 +54,7 @@ const addEntry = async (entry) => {
   }
 };
 
+//Poistaa merkinnän vain jos se kuuluu tokenissa tunnistetulle käyttäjälle
 const removeEntryById = async (entryId, userId) => {
   const sql = 'DELETE from DiaryEntries WHERE entry_id = ? AND user_id = ?';
   const [result] = await promisePool.execute(sql, [entryId, userId]);
@@ -61,4 +62,31 @@ const removeEntryById = async (entryId, userId) => {
   return result.affectedRows;
 };
 
-export {listAllEntries, findEntryById, addEntry, listAllEntriesByUserId, removeEntryById};
+const updateEntryById = async (entryId, userId, entry) => {
+  const {entry_date, mood, weight, sleep_hours, notes} = entry;
+
+  const sql = `
+    UPDATE DiaryEntries
+    SET entry_date = ?, mood = ?, weight = ?, sleep_hours = ?, notes = ?
+    WHERE entry_id = ? AND user_id = ?
+  `;
+
+  const params = [entry_date, mood, weight, sleep_hours, notes, entryId, userId];
+
+  try {
+    const [result] = await promisePool.execute(sql, params);
+    return result.affectedRows;
+  } catch (e) {
+    console.error('error', e.message);
+    return {error: e.message};
+  }
+};
+
+export {
+  listAllEntries,
+  findEntryById,
+  addEntry,
+  listAllEntriesByUserId,
+  removeEntryById,
+  updateEntryById
+};

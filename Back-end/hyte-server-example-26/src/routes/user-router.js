@@ -1,26 +1,34 @@
 import express from 'express';
-import {getMe, getUsers, postLogin, postUser} from '../controllers/user-controller.js';
+import {
+  getMe,
+  getUsers,
+  postLogin,
+  postUser,
+  getUserById,
+  putUserById,
+  deleteUserById,
+} from '../controllers/user-controller.js';
 import {authenticateToken} from '../middlewares/authentication.js';
 
 const userRouter = express.Router();
 
-// Users resource endpoints
-userRouter.route('/')
-// GET all users
-.get(authenticateToken, getUsers)
-// POST new user
-.post(postUser);
+// Käyttäjien listaus ja uuden käyttäjän luonti
+userRouter
+  .route('/')
+  .get(authenticateToken, getUsers)
+  .post(postUser);
 
-// POST user login
+// Kirjautuminen palauttaa JWT-tokenin
 userRouter.post('/login', postLogin);
 
-// Get user info based on token
+// Palauttaa kirjautuneen käyttäjän tiedot tokenin perusteella
 userRouter.get('/me', authenticateToken, getMe);
 
-
-// TODO: get user by id
-// app.get('/api/users/:id');
-// TODO: put user by id
-// TODO: delete user by id
+// Yksittäisen käyttäjän käsittely
+userRouter
+  .route('/:id')
+  .get(authenticateToken, getUserById)
+  .put(authenticateToken, putUserById)
+  .delete(authenticateToken, deleteUserById);
 
 export default userRouter;

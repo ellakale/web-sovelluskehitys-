@@ -1,22 +1,16 @@
-<!-- Sivuston layout inspiraatio -->
-<!-- https://dribbble.com/shots/23369008-Gym-Fitness-Landing-Page -->
-
 <!doctype html>
-<html lang="en">
+<html lang="fi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta
       name="description"
-      content="On tärkeää että pidät huolta itsestäsi. Seuraa treeniohjeitamme, tarkastele terveyttäsi
-      HRV tiedon avulla ja voi kokonaisvaltaisesti hyvin. Suuntaa nyt hyvinvointia ja uutta
-      elämääsi kohti."
+      content="Aktiv on hyvinvointipäiväkirja, jonka avulla voit seurata päivittäistä vointia, unta, painoa ja omia muistiinpanoja."
     />
 
-    <title>Aktiv</title>
+    <title>Aktiv – Hyvinvointipäiväkirja</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,15 +18,13 @@
       rel="stylesheet"
     />
   </head>
-  <body>
-    <!---------------->
-    <!-- Navigation -->
 
+  <body>
     <nav>
       <ul>
         <li><a href="" id="logo">Aktiv</a></li>
         <li>
-          <a href="index.html" class="selected navlink">Etusivu</a>
+          <a href="index.html" class="navlink">Etusivu</a>
         </li>
         <li>
           <a href="bmi.html" class="navlink">Painoindeksilaskuri</a>
@@ -41,47 +33,58 @@
           <a href="viikkotehtavat.html" class="navlink">Viikkotehtävät</a>
         </li>
         <li>
-          <a href="paivakirja.html" class="navlink">Hyvinvointipäiväkirja</a>
+          <a href="paivakirja.html" class="selected navlink">Hyvinvointipäiväkirja</a>
         </li>
       </ul>
-      <div>Hei Käyttäjä:&nbsp;<span class="username">Vieras</span></div>
+      <div>Hei käyttäjä:&nbsp;<span class="username">Vieras</span></div>
     </nav>
 
     <main>
-      <h2>Tänne päiväkirjahaut</h2>
-      <button class="get_entries">Hae päiväkirjamerkinnät</button>
+      <h2>Hyvinvointipäiväkirja</h2>
+      <p>Kirjaa päivän vointi, uni ja omat muistiinpanot.</p>
 
-      <!-- Flexbox pohja johon kortit luodaan -->
-      <section class="diary-card-area">
-        <div class="card">
-          <h2>Otsikko</h2>
-          <p>Teksti</p>
-        </div>
-        <div class="card">
-          <h2>Otsikko</h2>
-          <p>Teksti</p>
-        </div>
-        <div class="card">
-          <h2>Otsikko</h2>
-          <p>Teksti</p>
-        </div>
-        <div class="card">
-          <h2>Otsikko</h2>
-          <p>Teksti</p>
-        </div>
-      </section>
+      <form class="entry-form">
+        <label for="entry_date">Päivämäärä</label>
+        <input type="date" id="entry_date" required />
+
+        <label for="mood">Vointi</label>
+        <input type="text" id="mood" placeholder="esim. hyvä" required />
+
+        <label for="weight">Paino (kg)</label>
+        <input type="number" id="weight" step="0.1" required />
+
+        <label for="sleep_hours">Uni (h)</label>
+        <input type="number" id="sleep_hours" required />
+
+        <label for="notes">Muistiinpanot</label>
+        <textarea
+          id="notes"
+          rows="4"
+          placeholder="Kirjoita päivän voinnista..."
+        ></textarea>
+
+        <button type="submit" class="btn">Tallenna merkintä</button>
+      </form>
+
+      <p class="entry-message"></p>
+
+      <button class="get_entries btn">Hae päiväkirjamerkinnät</button>
+
+      <section class="diary-card-area"></section>
     </main>
+
     <footer>
-      <p>Aktiv - Hyvinvointipäiväkirja © 2026</p>
+      <p>Aktiv – Hyvinvointipäiväkirja © 2026</p>
     </footer>
 
     <dialog class="diary_dialog">
-      <h2>Tässä on dialogi</h2>
-      <p>Tänne voi avata ja muokata tietoa vaikka formissa</p>
+      <h2>Merkinnän tiedot</h2>
+      <p>Tässä voit tarkastella valitun hyvinvointimerkinnän tietoja.</p>
       <div class="diary_id">ID</div>
-      <button autofocus>Close</button>
+      <button autofocus>Sulje</button>
     </dialog>
+
+    <script type="module" src="/src/js/diary.js"></script>
+    <script type="module" src="/src/js/loggedUser.js"></script>
   </body>
-  <script type="module" src="/src/js/diary.js"></script>
-  <script type="module" src="/src/js/loggedUser.js"></script>
 </html>

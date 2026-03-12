@@ -1,7 +1,7 @@
 # Test HTTP requests
 ### use with: REST Client extension
 @apiurl = http://localhost:3000/api
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJ1c2VybmFtZSI6ImRvbmFsZDIiLCJlbWFpbCI6ImRvbmFsZDJAZXhhbXBsZS5jb20iLCJjcmVhdGVkX2F0IjoiMjAyNi0wMi0yM1QxMjowMzozNS4wMDBaIiwidXNlcl9sZXZlbCI6InJlZ3VsYXIiLCJpYXQiOjE3NzE4NTIwNjUsImV4cCI6MTc3MTkzODQ2NX0.wpJMjMd9kNJzrqDarvI1A7YO9DKSjhMXMCUtE6zAq2g
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJ1c2VybmFtZSI6ImtvaXJhIiwiZW1haWwiOiJlbGxhQGV4YW1wbGUuY29tIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDMtMTFUMTQ6Mzc6MjIuMDAwWiIsInVzZXJfbGV2ZWwiOiJyZWd1bGFyIiwiaWF0IjoxNzczMjgwMTI4LCJleHAiOjE3NzMzNjY1Mjh9.KkRYa6ab_OhI6ag6xWB0UtwnHkTAnqMLicpiUh9lLF4
 ### GET all items
 GET {{apiurl}}/items
 
@@ -57,8 +57,8 @@ POST {{apiurl}}/users/login
 Content-Type: application/json
 
 {
-  "username": "donald2",
-  "password": "duck"
+  "username": "koira",
+  "password": "luu"
 }
 
 ### Get user info by token
@@ -76,6 +76,19 @@ Authorization: Bearer {{token}}
 ### Get entry by id
 GET {{apiurl}}/entries/6
 
+### Update entry by id
+PUT http://localhost:3000/api/entries/7
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "entry_date": "2026-03-03",
+  "mood": "huono",
+  "weight": 67,
+  "sleep_hours": 8,
+  "notes": "ihan kiva päivä"
+}
+
 ### Delete entry by id
 DELETE {{apiurl}}/entries/6
 Authorization: Bearer {{token}}
@@ -91,4 +104,17 @@ Authorization: Bearer {{token}}
   "weight": 66,
   "sleep_hours": 5,
   "notes": "normipäivä"
+}
+
+### Validation test - wrong data
+POST http://localhost:3000/api/entries
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "entry_date": "",
+  "mood": "a",
+  "weight": "abc",
+  "sleep_hours": 50,
+  "notes": "test"
 }

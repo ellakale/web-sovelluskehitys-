@@ -1,66 +1,151 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import {addUser, findUserByUsername, listAllUsers} from '../models/user-model.js';
+import {
+  addUser,
+  findUserByUsername,
+  listAllUsers,
+  findUserById,
+  updateUserById,
+  removeUserById,
+} from '../models/user-model.js';
 
-// TODO: lisää tietokantafunktiot user modeliin
-// ja käytä niitä täällä
-
-// TODO: getUserById
-// TODO: putUserById
-// TODO: deleteUserById
-
-
-const getUsers = async (req, response) => {
+// Palauttaa kaikki käyttäjät
+const getUsers = async (req, res) => {
   const users = await listAllUsers();
-  response.json(users);
+  res.json(users);
 };
 
+// Luo uuden käyttäjän ja tallentaa salasanan hash-muodossa
+const postUser = async (req, res) => {
+  const newUser = req.body;
 
-// Käyttäjän lisäys (rekisteröityminen)
-const postUser = async (pyynto, vastaus) => {
-  const newUser = pyynto.body;
-  // Uusilla käyttäjillä pitää olla kaikki vaaditut ominaisuudet tai palautetaan virhe
-  // itse koodattu erittäin yksinkertainen syötteen validointi
   if (!(newUser.username && newUser.password && newUser.email)) {
-    return vastaus.status(400).json({error: 'required fields missing'});
+    return res.status(400).json({error: 'required fields missing'});
   }
-  // HUOM: ÄLÄ ikinä loggaa käyttäjätietoja ensimmäisten pakollisten testien jälkeen!!! (tietosuoja)
-  //console.log('registering new user', newUser);
 
-  // Lasketaan salasanasta tiiviste (hash)
   const hash = await bcrypt.hash(newUser.password, 10);
-  //console.log('salasanatiiviste:', hash);
-  // Korvataan selväkielinen salasana tiivisteellä ennen kantaan tallennusta
   newUser.password = hash;
+
   const newUserId = await addUser(newUser);
-  vastaus.status(201).json({message: 'new user added', user_id: newUserId});
+
+  res.status(201).json({
+    message: 'new user added',
+    user_id: newUserId,
+  });
 };
 
-// Tietokantaversio valmis
+// Tarkistaa käyttäjän tunnukset ja palauttaa JWT-tokenin
 const postLogin = async (req, res) => {
-  const {username, password} = req.body;
-  // haetaan käyttäjä-objekti käyttäjän nimen perusteella
-  const user = await findUserByUsername(username);
-  //console.log('postLogin user from db', user);
-  if (user) {
-    // jos asiakkaalta tullut salasana vastaa tietokannasta haettua tiivistettä, ehto on tosi
-    if (await bcrypt.compare(password, user.password)) {
-      delete user.password;
-      // generate & sign token using a secret and expiration time
-      // read from .env file
-      const token = jwt.sign(user, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN,
-      });
-      return res.json({message: 'login ok', user, token});
+  try {
+    const {username, password} = req.body;
+
+    const user = await findUserByUsername(username);
+
+    if (user) {
+      const passwordOk = await bcrypt.compare(password, user.password);
+
+      if (passwordOk) {
+        delete user.password;
+
+        const token = jwt.sign(user, process.env.JWT_SECRET, {
+          expiresIn: process.env.JWT_EXPIRES_IN,
+        });
+
+        return res.json({message: 'login ok', user, token});
+      }
+
+      return res.status(403).json({error: 'invalid password'});
     }
-    return res.status(403).json({error: 'invalid password'});
+
+    return res.status(404).json({error: 'user not found'});
+  } catch (error) {
+    console.error('postLogin error:', error);
+    return res.status(500).json({error: error.message});
   }
-  res.status(404).json({error: 'user not found'});
 };
 
-// Get user information stored inside token
+// Palauttaa kirjautuneen käyttäjän tiedot tokenin perusteella
 const getMe = (req, res) => {
   res.json(req.user);
 };
 
-export {getUsers, postUser, postLogin, getMe};
+// Hakee käyttäjän id:n perusteella
+const getUserById = async (req, res) => {
+  const user = await findUserById(req.params.id);
+
+  if (user?.error) {
+    return res.status(500).json(user);
+  }
+
+  if (!user) {
+    return res.status(404).json({message: 'user not found'});
+  }
+
+  res.json(user);
+};
+
+// Päivittää käyttäjän tiedot (vain oma käyttäjä)
+const putUserById = async (req, res) => {
+  const requestedUserId = Number(req.params.id);
+  const loggedInUserId = Number(req.user.user_id);
+
+  if (requestedUserId !== loggedInUserId) {
+    return res
+      .status(403)
+      .json({message: 'you can update only your own user'});
+  }
+
+  const {username, email} = req.body;
+
+  if (!username || !email) {
+    return res
+      .status(400)
+      .json({message: 'username and email are required'});
+  }
+
+  const result = await updateUserById(requestedUserId, {username, email});
+
+  if (result?.error) {
+    return res.status(500).json(result);
+  }
+
+  if (result > 0) {
+    return res.json({message: 'user updated successfully'});
+  }
+
+  return res.status(404).json({message: 'user not found'});
+};
+
+// Poistaa käyttäjän (vain oma käyttäjä)
+const deleteUserById = async (req, res) => {
+  const requestedUserId = Number(req.params.id);
+  const loggedInUserId = Number(req.user.user_id);
+
+  if (requestedUserId !== loggedInUserId) {
+    return res
+      .status(403)
+      .json({message: 'you can delete only your own account'});
+  }
+
+  const result = await removeUserById(requestedUserId);
+
+  if (result?.error) {
+    return res.status(500).json(result);
+  }
+
+  if (result > 0) {
+    return res.json({message: 'user deleted successfully'});
+  }
+
+  return res.status(404).json({message: 'user not found'});
+};
+
+export {
+  getUsers,
+  postUser,
+  postLogin,
+  getMe,
+  getUserById,
+  putUserById,
+  deleteUserById,
+};

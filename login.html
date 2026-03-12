@@ -1,117 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Aktiv - Kirjautuminen</title>
   </head>
 
   <body>
+    <h2>Aktiv - Käyttäjätili</h2>
 
-    <h3>REGISTER</h3>
+    <h3>Luo käyttäjä</h3>
 
     <p>
-      Lisää käyttäjiä formin avulla. Formi lisää uuden käyttäjän
-      nappulasta 'Add User'.
+      Luo uusi käyttäjätili, jotta voit kirjautua sisään ja tarkastella hyvinvointipäiväkirjan merkintojä.
     </p>
 
-    <!-- https://www.w3schools.com/css/css_form.asp -->
-    <!-- https://www.w3schools.com/css/tryit.asp?filename=trycss_form_padding -->
-
-    <pre style="overflow: auto">
-    POST http://localhost:3000/api/users
-    content-type: application/json
-
-    {
-      "username": "daisy",
-      "password": "duck",
-      "email": "daisy@example.com"
-    }
-    </pre>
 
     <form class="registerForm">
-      <label for="username">Username</label>
+      <label for="username">Käyttäjänimi</label>
       <input
         id="username"
         type="text"
         name="username"
-        placeholder="daisy"
+        placeholder="Käyttäjänimi"
       />
-      <label for="password">Password</label>
+      <label for="password">Salasana</label>
       <input
         id="password"
         type="password"
         name="password"
-        placeholder="duck"
+        placeholder="salasana"
       />
-      <label for="email">Email</label>
+      <label for="email">Sähköposti</label>
       <input
         id="email"
         type="email"
         name="email"
-        placeholder="daisy@example.com"
+        placeholder="sähköposti"
       />
       <input
         name="submit"
         type="submit"
-        value="Add User"
+        value="Luo käyttäjä"
         class="postuser"
       />
     </form>
-  </div>
 
-    <h3>LOGIN</h3>
-    <pre><code>
-      # Login
-      POST http://localhost:3000/api/users/login
-      content-type: application/json
+    <hr />
 
-      {
-        "username": "daisy",
-        "password": "duck"
-      }
-      </code></pre>
+    <h3>Kirjaudu</h3>
+
+    <p>Kirjaudu sisään nähdäksesi omat hyvinvointimerkintäsi.</p>
+
     <div>
       <form class="loginForm">
-        <label for="username">Username</label>
+        <label for="login-username">Käyttäjänimi</label>
         <input
+          id="login-username"
           type="text"
           name="username"
-          placeholder="name"
-          value="daisy" />
-        <label for="password">Password</label>
+          placeholder="käyttäjänimi"
+        />
+
+        <label for="login-password">Salasana</label>
         <input
+          id="login-password"
           type="password"
           name="password"
-          placeholder="name123"
-          value="duck"
+          placeholder="salasana"
         />
+
         <input
           name="submit"
           type="submit"
-          value="Login and get new token"
+          value="Kirjaudu"
           class="loginform"
         />
       </form>
+
       <br />
       <div id="loginResponse"></div>
-    </div>
-    <hr />
-    <div>
-      <pre><code>
-        # Get user info by token (requires token)
-        GET http://localhost:3000/api/users/me
-        Authorization: Bearer (put-user-token-here)</code></pre>
-      <button id="meRequest">Make an "authenticated" request</button>
-      <br />
-      <div id="meResponse"></div>
-    </div>
-    <hr />
-    <div>
-      <button id="clearButton">Clear localStorage</button>
-      <br />
-      <code id="clearResponse"></code>
     </div>
   </body>
 

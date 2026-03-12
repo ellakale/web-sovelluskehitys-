@@ -2,7 +2,14 @@ import '../css/style.css';
 import '../css/mobile.css';
 import '../css/diary-card.css';
 
-import { getEntries } from './entries.js';
+import { getEntries, addEntry } from './entries.js';
 
 const getEntriesBtn = document.querySelector('.get_entries');
-getEntriesBtn.addEventListener('click', getEntries);
+if (getEntriesBtn) {
+  getEntriesBtn.addEventListener('click', getEntries);
+}
+
+const entryForm = document.querySelector('.entry-form');
+if (entryForm) {
+  entryForm.addEventListener('submit', addEntry);
+}

@@ -1,14 +1,55 @@
 import promisePool from '../utils/database.js';
 
+const findUserById = async (id) => {
+  try {
+    const sql =
+      'SELECT user_id, username, email, created_at, user_level FROM Users WHERE user_id = ?';
+    const [rows] = await promisePool.execute(sql, [id]);
+    return rows[0];
+  } catch (e) {
+    console.error('error', e.message);
+    return {error: e.message};
+  }
+};
 
-// TODO: lisää modelit ja muokkaa kontrollerit reiteille:
-// GET /api/users/:id - get user by id
+const updateUserById = async (id, user) => {
+  const {username, email} = user;
+
+  try {
+    const sql = `
+      UPDATE Users
+      SET username = ?, email = ?
+      WHERE user_id = ?
+    `;
+    const [result] = await promisePool.execute(sql, [username, email, id]);
+    return result.affectedRows;
+  } catch (e) {
+    console.error('error', e.message);
+    return {error: e.message};
+  }
+};
+
+const removeUserById = async (id) => {
+  try {
+    const sql = 'DELETE FROM Users WHERE user_id = ?';
+    const [result] = await promisePool.execute(sql, [id]);
+    return result.affectedRows;
+  } catch (e) {
+    console.error('error', e.message);
+    return {error: e.message};
+  }
+};
 
 // GET /api/users - list all users
 const listAllUsers = async () => {
-  const sql = 'SELECT username, created_at FROM Users';
-  const [rows] = await promisePool.query(sql);
-  return rows;
+  try {
+    const sql = 'SELECT username, created_at FROM Users';
+    const [rows] = await promisePool.query(sql);
+    return rows;
+  } catch (e) {
+    console.error('error', e.message);
+    return {error: e.message};
+  }
 };
 
 // POST /api/users - add a new user
@@ -27,11 +68,23 @@ const addUser = async (user) => {
   }
 };
 
-// Huom: virheenkäsittely puuttuu
+
 const findUserByUsername = async (username) => {
-  const sql = 'SELECT * FROM Users WHERE username = ?';
-  const [rows] = await promisePool.execute(sql, [username]);
-  return rows[0];
+  try {
+    const sql = 'SELECT * FROM Users WHERE username = ?';
+    const [rows] = await promisePool.execute(sql, [username]);
+    return rows[0];
+  } catch (e) {
+    console.error('error', e.message);
+    return {error: e.message};
+  }
 };
 
-export {findUserByUsername, addUser, listAllUsers};
+export {
+  findUserByUsername,
+  addUser,
+  listAllUsers,
+  findUserById,
+  updateUserById,
+  removeUserById,
+};
