@@ -1,106 +1,232 @@
-# web-sovelluskehitys-
+# Aktiv – Hyvinvointipäiväkirja
 
-# Aktiv – hyvinvointipäiväkirja
+## Projektin kuvaus
 
-Aktiv on HTML-, CSS- ja JavaScript-pohjainen hyvinvointisovellus, jossa käyttäjä voi kirjautua sisään, lisätä omia hyvinvointimerkintöjä ja tarkastella niitä päiväkirjamaisessa näkymässä. Sovellus hyödyntää Node.js/Express-taustapalvelua ja MySQL/MariaDB-tietokantaa.
+Aktiv on hyvinvointisovellus, jonka avulla käyttäjä voi seurata päivittäistä vointiaan, unta ja muita hyvinvointiin liittyviä tekijöitä.
+
+Sovellus sisältää REST API -taustapalvelun sekä HTML/CSS/JavaScript -pohjaisen käyttöliittymän.
+
+Sovellus hyödyntää Node.js + Express REST API -taustapalvelua, joka käsittelee tietokantaan liittyvät operaatiot.
+
+---
 
 ## Sovelluksen ominaisuudet
 
-- käyttäjän rekisteröinti
-- käyttäjän kirjautuminen
-- JWT-autentikointi
-- hyvinvointimerkintöjen lisääminen
-- omien päiväkirjamerkintöjen hakeminen
-- omien päiväkirjamerkintöjen päivittäminen
-- omien päiväkirjamerkintöjen poistaminen
-- painoindeksilaskuri
-- käyttöliittymässä päiväkirjamerkinnät esitetään kortteina
+Käyttäjä voi:
 
-## Käytetyt teknologiat
+- luoda käyttäjätilin
+- kirjautua sisään
+- lisätä hyvinvointipäiväkirjamerkintöjä
+- tarkastella omia merkintöjään
+- päivittää merkintöjä
+- poistaa merkintöjä
 
-### Frontend
-- HTML
-- CSS
-- JavaScript
-- Vite
+---
 
-### Backend
-- Node.js
-- Express
-- JWT
-- bcrypt
+## REST API
 
-### Tietokanta
-- MariaDB / MySQL
+### Authentication
+
+Kirjautuminen tapahtuu endpointin kautta:
+
+POST /api/users/login
+
+Onnistunut kirjautuminen palauttaa JWT-tokenin.
+
+Token lisätään suojattuihin pyyntöihin seuraavasti:
+
+Authorization: Bearer <token>
+
+---
+
+### Users API
+
+GET /api/users
+POST /api/users
+GET /api/users/me
+GET /api/users/:id
+PUT /api/users/:id
+DELETE /api/users/:id
+
+---
+
+### Diary Entries API
+
+GET /api/entries
+POST /api/entries
+PUT /api/entries/:id
+DELETE /api/entries/:id
+
+---
+
+## Tietoturva
+
+Sovelluksessa on toteutettu seuraavat tietoturvatoiminnot.
+
+### Authentication
+
+- JWT-token kirjautumiseen
+- token tarkistetaan middlewarella
+
+### Authorization
+
+- käyttäjä voi nähdä vain omat päiväkirjamerkintänsä
+- käyttäjä voi päivittää vain omia merkintöjään
+- käyttäjä voi poistaa vain omia merkintöjään
+- käyttäjä voi muokata vain omia käyttäjätietojaan
+
+### Password security
+
+Salasanat hashataan ennen tallennusta käyttäen bcrypt-kirjastoa.
+
+---
+
+## Input validation
+
+Palvelin validoi käyttäjän syötteet käyttämällä express-validator kirjastoa.
+
+Validoidut kentät:
+
+- entry_date
+- mood
+- weight
+- sleep_hours
+- notes
+
+Virheelliset pyynnöt estetään ennen controlleria.
+
+---
+
+## Error handling
+
+Sovelluksessa on käytössä keskitetty virheenkäsittely middleware.
+
+Virheet välitetään controllerista next(error) kautta ja käsitellään errorHandler middlewarella.
+
+---
 
 ## Tietokannan rakenne
 
-Sovellus käyttää tietokantaa `healthdiary`.
-
-Keskeiset taulut:
-
-- `users`
-  - user_id
-  - username
-  - password
-  - email
-  - created_at
-  - user_level
-
-- `diaryentries`
-  - entry_id
-  - user_id
-  - entry_date
-  - mood
-  - weight
-  - sleep_hours
-  - notes
-  - created_at
-
-Lisäksi tietokannassa on myös:
-- `medications`
-- `exercises`
-
-## Autentikointi ja käyttöoikeudet
-
-Sovelluksessa käytetään JWT-autentikointia käyttäjän tunnistamiseen. Kirjautumisen jälkeen käyttäjälle palautetaan token, joka tallennetaan localStorageen ja lähetetään suojattujen pyyntöjen mukana.
-
-### Käyttöoikeussäännöt
-- vain kirjautunut käyttäjä voi hakea omat päiväkirjamerkintänsä
-- uusi päiväkirjamerkintä tallennetaan aina kirjautuneelle käyttäjälle
-- käyttäjä voi päivittää vain oman päiväkirjamerkintänsä
-- käyttäjä voi poistaa vain oman päiväkirjamerkintänsä
-- suojatut reitit tarkistavat JWT-tokenin ennen toiminnon suorittamista
-
-## Toteutetut API-reitit
-
 ### Users
-- `POST /api/users` – uuden käyttäjän rekisteröinti
-- `POST /api/users/login` – kirjautuminen
-- `GET /api/users/me` – kirjautuneen käyttäjän tietojen haku
 
-### Diary entries
-- `GET /api/entries` – käyttäjän omien merkintöjen haku
-- `POST /api/entries` – uuden merkinnän lisäys
-- `PUT /api/entries/:id` – oman merkinnän päivitys
-- `DELETE /api/entries/:id` – oman merkinnän poisto
+| Kenttä | Tyyppi |
+|------|------|
+| user_id | INT (PK) |
+| username | VARCHAR |
+| password | VARCHAR |
+| email | VARCHAR |
+| created_at | DATETIME |
+| user_level | VARCHAR |
 
-## Käyttöliittymän muokkaukset lähtöprojektista
+---
 
-Sovellus pohjautuu kurssilla tehtyihin backend- ja frontend-esimerkkeihin, mutta käyttöliittymää on muokattu omannäköiseksi.
+### DiaryEntries
 
-Tehdyt muutokset:
-- sovelluksen nimi vaihdettu muotoon **Aktiv**
-- etusivun tekstit ja rakenne muokattu
-- väriteemaa muutettu
-- päiväkirjasivua muokattu hyvinvointipäiväkirjaksi
-- päiväkirjaan lisätty merkintöjen tallennuslomake
-- päiväkirjamerkinnät näytetään korteissa
-- dialogin sisältöä muokattu näyttämään merkinnän tarkemmat tiedot
+| Kenttä | Tyyppi |
+|------|------|
+| entry_id | INT (PK) |
+| user_id | INT (FK) |
+| entry_date | DATE |
+| mood | VARCHAR |
+| weight | DECIMAL |
+| sleep_hours | INT |
+| notes | TEXT |
+| created_at | DATETIME |
 
-## Sovelluksen käynnistäminen
+---
 
-### Frontend
-```bash
-npm install
-npm run dev
+### Medications
+
+| Kenttä | Tyyppi |
+|------|------|
+| medication_id | INT |
+| user_id | INT |
+| name | VARCHAR |
+| dosage | VARCHAR |
+| frequency | VARCHAR |
+
+---
+
+### Exercises
+
+| Kenttä | Tyyppi |
+|------|------|
+| exercise_id | INT |
+| user_id | INT |
+| type | VARCHAR |
+| duration | INT |
+| intensity | VARCHAR |
+
+---
+
+## Käyttöliittymä
+
+Käyttöliittymä on toteutettu käyttäen:
+
+- HTML
+- CSS
+- JavaScript
+
+Sivut:
+
+- Etusivu
+- BMI-laskuri
+- Viikkotehtävät
+- Hyvinvointipäiväkirja
+
+Päiväkirjasivulla käyttäjä voi:
+
+- lisätä merkinnän
+- tarkastella merkintöjä
+- avata merkinnän dialogissa
+- päivittää tai poistaa merkinnän
+
+---
+
+## Kuvakaappaukset
+
+![Etusivu](public/images/Näyttökuva(etusivu).png)
+![Info](public/images/Näyttökuva(info).png)
+![bmi1](public/images/Näyttökuva(bmi1).png)
+![bmi2](public/images/Näyttökuva(bmi2).png)
+![Iviikkoteht](public/images/Näyttökuva(viikkoteht).png)
+![Paivakirja](public/images/Näyttökuva(paiva1).png)
+![IPaivakirja2](public/images/Näyttökuva(paiva2).png)
+![Paivakirja3](public/images/Näyttökuva(paiva3).png)
+![Luokayttaja](public/images/Näyttökuva(luo).png)
+![Kirjaudu](public/images/Näyttökuva(kirjaudu).png)
+
+
+
+---
+
+## Käytetyt lähteet
+
+Projektissa on käytetty seuraavia lähteitä:
+
+- Node.js dokumentaatio
+- Express dokumentaatio
+- MySQL dokumentaatio
+- MDN Web Docs
+- kurssin tuntimateriaalit
+
+---
+
+## AI:n hyödyntäminen
+
+Projektin kehityksessä on hyödynnetty tekoälytyökaluja:
+
+- koodin selittämiseen
+- virheiden debuggaamiseen
+- REST API rakenteen ymmärtämiseen
+- dokumentaation kirjoittamiseen
+
+AI:ta on käytetty oppimisen tukena, ja kaikki koodi on testattu sekä muokattu projektin tarpeisiin sopivaksi.
+
+---
+
+## GitHub repository
+
+Projektin lähdekoodi löytyy GitHubista.
+
+https://github.com/ellakale/web-sovelluskehitys-.git
