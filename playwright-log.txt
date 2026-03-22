@@ -1,0 +1,47 @@
+{"level":30,"time":"2026-03-22T16:55:52.656Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Listening on 127.0.0.1:55958"}
+{"level":30,"time":"2026-03-22T16:55:52.839Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Start of node method newBrowser"}
+{"level":30,"time":"2026-03-22T16:55:54.385Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Adding browser to stack: chromium, version: 145.0.7632.6"}
+{"level":30,"time":"2026-03-22T16:55:54.386Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Adding 0 contexts to browser"}
+{"level":30,"time":"2026-03-22T16:55:54.386Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"End of node method newBrowser"}
+{"level":30,"time":"2026-03-22T16:55:54.398Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Start of node method newPage"}
+{"level":30,"time":"2026-03-22T16:55:54.399Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"currentBrowser: {\"name\":\"chromium\",\"browser\":{\"_type\":\"Browser\",\"_guid\":\"browser@336e8bc1cc4103d589a2d44a2a43f2b3\"},\"headless\":false,\"_contextStack\":[],\"id\":\"browser=73d3bbf4-6a83-477d-9933-07138d96e722\"}"}
+{"level":30,"time":"2026-03-22T16:55:54.424Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Setting default timeout for context context=e1695190-1dc1-44df-a11d-e9112a34961f to 10000"}
+{"level":30,"time":"2026-03-22T16:55:54.425Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Changed active context: context=e1695190-1dc1-44df-a11d-e9112a34961f"}
+{"level":30,"time":"2026-03-22T16:55:54.712Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Video path: undefined"}
+{"level":30,"time":"2026-03-22T16:55:54.713Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Changed active page"}
+{"level":30,"time":"2026-03-22T16:55:54.932Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"End of node method newPage"}
+{"level":30,"time":"2026-03-22T16:55:58.011Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Start of node method closeBrowser"}
+{"level":30,"time":"2026-03-22T16:55:58.038Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Removed page=aa1f971d-9b24-40bd-9406-5db5ad3c0f5a from context=e1695190-1dc1-44df-a11d-e9112a34961f page stack"}
+{"level":30,"time":"2026-03-22T16:55:58.667Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"End of node method closeBrowser"}
+================= Original suppressed error =================
+Error: Browser has been closed.
+    at PlaywrightState.getActiveBrowser (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\index.js:12757:15)
+    at PlaywrightServer.getActiveBrowser (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\index.js:13677:59)
+    at PlaywrightServer.setTimeout (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\index.js:13933:56)
+    at Object.onReceiveHalfClose (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server.js:1464:25)
+    at BaseServerInterceptingCall.maybePushNextMessage (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:595:31)
+    at BaseServerInterceptingCall.handleEndEvent (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:635:14)
+    at ServerHttp2Stream.<anonymous> (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:394:18)
+    at ServerHttp2Stream.emit (node:events:520:35)
+    at endReadableNT (node:internal/streams/readable:1729:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+=============================================================
+{"level":30,"time":"2026-03-22T16:55:58.685Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Start of node method getBrowserCatalog"}
+{"level":30,"time":"2026-03-22T16:55:58.686Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"End of node method getBrowserCatalog"}
+================= Original suppressed error =================
+Error: Browser has been closed.
+    at PlaywrightState.getActiveBrowser (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\index.js:12757:15)
+    at PlaywrightServer.getActiveBrowser (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\index.js:13677:59)
+    at PlaywrightServer.setTimeout (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\index.js:13933:56)
+    at Object.onReceiveHalfClose (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server.js:1464:25)
+    at BaseServerInterceptingCall.maybePushNextMessage (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:595:31)
+    at BaseServerInterceptingCall.handleEndEvent (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:635:14)
+    at ServerHttp2Stream.<anonymous> (C:\Users\Käyttäjä\Desktop\HTML + CSS\webkehitys\k2026-hyte-projekti-vite\.venv\Lib\site-packages\Browser\wrapper\node_modules\@grpc\grpc-js\build\src\server-interceptors.js:394:18)
+    at ServerHttp2Stream.emit (node:events:520:35)
+    at endReadableNT (node:internal/streams/readable:1729:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+=============================================================
+{"level":30,"time":"2026-03-22T16:55:58.696Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Start of node method getBrowserCatalog"}
+{"level":30,"time":"2026-03-22T16:55:58.696Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"End of node method getBrowserCatalog"}
+{"level":30,"time":"2026-03-22T16:55:59.965Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"Start of node method closeAllBrowsers"}
+{"level":30,"time":"2026-03-22T16:55:59.965Z","pid":30940,"hostname":"DESKTOP-5COCR47","msg":"End of node method closeAllBrowsers"}
