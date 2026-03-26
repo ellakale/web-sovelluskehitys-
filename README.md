@@ -1,4 +1,6 @@
 
+
+
 ## Tehtävä 1 – Asennukset
 
 Projektia varten asennettiin seuraavat työkalut:
@@ -18,6 +20,8 @@ Projektin juureen luotiin myös kansiot:
 - `tests/back`
 - `outputs`
 
+---
+
 ### Testaus
 Asennusten toiminta testattiin tekemällä Robot Framework -testi tiedostolle `bmi.html`.
 
@@ -30,12 +34,78 @@ Testi suoritettiin komennolla:
 
 ```bash
 robot -d outputs tests/front/bmi.robot
+Havainnot
 
-# Havainnot
 Asennuksen aikana tuli aluksi haasteita requirements.txt-tiedoston muodostuksessa, Robot Framework -tiedoston sisennyksissä sekä paikallisen palvelimen osoitteessa. Ongelmien jälkeen testi saatiin toimimaan onnistuneesti Vite-kehityspalvelimen kautta.
 
-# Tekoälyn käyttö
+Tekoälyn käyttö
+
 Tehtävän tekemisessä hyödynnettiin tekoälyä (ChatGPT) apuna erityisesti virhetilanteiden ratkaisemisen sekä ensimmäisten testien muodostamisen tukena. Ratkaisut käytiin kuitenkin läpi ja sovellettiin omaan projektiin.
+
+Tehtävä 2–3 – Käyttöliittymän (GUI) testaus
+Tavoite
+
+Tavoitteena oli tutustua Robot Frameworkin Browser Libraryn käyttöön ja testata verkkosovelluksen käyttöliittymän toiminnallisuuksia.
+
+Toteutus
+
+Tehtävää varten luotiin seuraavat tiedostot:
+
+tests/front/Keywords.robot
+tests/front/browser_demo.robot
+
+Keywords.robot-tiedostoon määriteltiin testissä käytettävät muuttujat, kuten käyttäjätunnus, salasana ja viesti.
+
+Testit toteutettiin käyttäen Browser Librarya ja Chromium-selainta.
+
+Tehtävä 2 – Kirjautumistestin valmistelu
+
+Tutustuttiin kirjautumisen testaamiseen ja siihen, miten käyttäjätunnus ja salasana voidaan erottaa omaan resurssitiedostoon (Keywords.robot).
+
+Lisäksi harjoiteltiin Type Secret -avainsanan käyttöä, jolla salasana voidaan syöttää turvallisesti ilman että se näkyy testilokeissa.
+
+Tehtävä 3 – Web form -testi
+
+Tehtävässä testattiin Seleniumin Web form -esimerkkisivun eri käyttöliittymäelementtejä.
+
+Testissä tehtiin seuraavat toiminnot:
+
+avattiin verkkosivu selaimessa
+tarkistettiin sivun otsikko
+syötettiin teksti tekstikenttään
+syötettiin salasana Type Secret -avainsanalla
+kirjoitettiin viesti textarea-kenttään
+valittiin arvo dropdown (select) -valikosta
+syötettiin arvo datalist-kenttään
+ladattiin tiedosto file input -kenttään
+valittiin ja poistettiin checkboxeja
+valittiin radio button
+lähetettiin lomake
+tarkistettiin, että lopputulos oli Received!
+Testin suoritus
+
+Testi suoritettiin komennolla:
+
+robot -d outputs tests/front/browser_demo.robot
+Havainnot
+
+Testauksen aikana opittiin:
+
+Robot Frameworkin rakenne (Settings, Test Cases)
+Browser Libraryn keskeiset avainsanat
+elementtien valinta CSS- ja name-selectoreilla
+tiedostopolkujen merkitys testejä ajettaessa
+käyttöliittymäelementtien automatisointi
+Tekoälyn käyttö
+
+Tehtävän tekemisessä hyödynnettiin tekoälyä (ChatGPT) apuna erityisesti:
+
+virhetilanteiden ratkaisemisessa
+Robot Frameworkin syntaksin tarkistamisessa
+testien muodostamisessa
+README-dokumentaation parantamisessa
+
+Ratkaisut käytiin kuitenkin läpi ja sovellettiin omaan projektiin.
 
 # Aktiv – Hyvinvointipäiväkirja
 
